@@ -1,137 +1,137 @@
-背景：#1a1 a1 a；
-<颜色：白色； 填充物:20px；>
-<#玩家{>
-    <最大宽度：400像素；#4CAF /* 播放器界面设计 */: 身体;>天线[天线=you=[file]]{</#1a1a1 a1 a；：颜色；>
-    <自定义-上传{ 白色衬垫="viewport" 小卖部: 运动员;=小卖部: 12边缘;>
-    <border-radius:5汽车；>
-/* 播放器界面设计 */
-块
-中心
-小卖部
-控制
-中心
+<!DOCTYPE html>
+<html>
+<head>
+    <title>手机音乐播放器</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* 播放器界面设计 */
+        body {
+            font-family: Arial;
+            background: #1a1a1a;
+            color: white;
+            padding: 20px;
         }
-/* 播放器界面设计 */
-正文{
-字体-：你的一天；
+        #player {
+            max-width: 400px;
+            margin: auto;
         }
-背景：#1a1 a1 a；
-颜色：白色；
+        input[type="file"] {
+            display: none;
         }
-填充物:20px；
-#玩家{
-/* 播放器界面设计 */
-块
-中心
-小卖部
-控制
-中心
-/* 播放器界面设计 */
+        .custom-upload {
+            background: #4CAF50;
+            color: white;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
         }
-正文{
-字体-：你的一天；
+        #controls {
+            text-align: center;
         }
-        按钮 {
-            背景: #2196F3;
-            边界: 没有一个;
-            颜色: 白色;
-            衬垫: 12小卖部 24小卖部;
-            border-radius: 25小卖部;
-            边缘: 5小卖部;
-            光标: 指针;
+        button {
+            background: #2196F3;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            margin: 5px;
+            cursor: pointer;
         }
         #progressBar {
-            宽度: 100%;
-            高度: 5小卖部;
-            背景: #444;
-            边缘: 15小卖部 0;
+            width: 100%;
+            height: 5px;
+            background: #444;
+            margin: 15px 0;
         }
-        #进步 {
-            高度: 100%;
-            背景: #4CAF50;
-            宽度: 0%;
+        #progress {
+            height: 100%;
+            background: #4CAF50;
+            width: 0%;
         }
-    </风格>
-</头>
-<身体>
-    <级 身份证="player">
-        <标签 班级="custom-upload">
+    </style>
+</head>
+<body>
+    <div id="player">
+        <label class="custom-upload">
             📁 选择音乐文件
-            <输入 类型="file" 身份证="fileInput" 接受="audio/*">
-        </标签>
+            <input type="file" id="fileInput" accept="audio/*">
+        </label>
         
-        <级 身份证="songTitle">未选择文件</级>
+        <div id="songTitle">未选择文件</div>
         
-        <级 身份证="progressBar">
-            <级 身份证="progress"></级>
-        </级>
+        <div id="progressBar">
+            <div id="progress"></div>
+        </div>
         
-        <级 身份证="timeDisplay">00:00 / 00:00</级>
+        <div id="timeDisplay">00:00 / 00:00</div>
         
-        <级 身份证="controls">
-            <按钮 onclick="级()">▶ 播放</按钮>
-背景：#2196 F 3；
-边界: 没有一个;
-颜色: 白色;
+        <div id="controls">
+            <button onclick="togglePlay()">▶ 播放</button>
+            <button onclick="stopMusic()">⏹ 停止</button>
+        </div>
+    </div>
 
-衬垫: 12小卖部 24小卖部;
-border-radius:25小卖部；
-边缘: 5小卖部;
-光标: 指针;
+    <script>
+        // 音频控制核心逻辑
+        const audio = new Audio();
+        let isPlaying = false;
 
-}
-#progressBar {
-宽度: 100%;
-高度: 5小卖部;
-背景: #444;
-边缘: 15小卖部 0;
-}
-#进步 {
-高度: 100%;
+        // 文件选择处理
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('songTitle').textContent = file.name;
+                audio.src = URL.createObjectURL(file);
+                audio.addEventListener('loadedmetadata', updateDuration);
+            }
+        });
 
-背景：#4CAF 50；
-宽度: 0%;
-}
-query为空
-query为空
-query为空
-📁 选择音乐文件
+        // 播放/暂停切换
+        function togglePlay() {
+            if (!audio.src) return;
+            isPlaying ? audio.pause() : audio.play();
+            isPlaying = !isPlaying;
+            document.querySelector('button').textContent = isPlaying ? '⏸ 暂停' : '▶ 播放';
+        }
 
-query为空
-query为空
-query为空
-未选择文件
-query为空
-query为空
-查询为空
+        // 停止音乐
+        function stopMusic() {
+            audio.pause();
+            audio.currentTime = 0;
+            isPlaying = false;
+            document.querySelector('button').textContent = '▶ 播放';
+        }
 
-查询为空
-00:00 / 00:00
-查询为空
-stopMusic
+        // 进度条更新
+        audio.addEventListener('timeupdate', () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progress').style.width = progress + '%';
             
-文档. getElementById([progress])
-// 时间显示格式化
-康斯特 formatTime=（secs）=>{
-const ments=数学
-const seconds=数学
+            // 时间显示格式化
+            const formatTime = (secs) => {
+                const minutes = Math.floor(secs / 60);
+                const seconds = Math.floor(secs % 60);
+                return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
             };
             
-<剧块>
-超文本标记语言
+            document.getElementById('timeDisplay').textContent = 
+                `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
         });
 
-头
-标题
+        // 自动播放下一曲（需用户手动选择）
+        audio.addEventListener('ended', () => {
             stopMusic();
-手机音乐播放器
+            alert('播放结束，请选择新文件');
         });
 
-标题
-梅塔
-名字
-内容
+        // 获取音乐时长
+        function updateDuration() {
+            document.getElementById('timeDisplay').textContent = 
+                `00:00 / ${Math.floor(audio.duration/60)}:${Math.floor(audio.duration%60)}`;
         }
-"width=device-width, initial-scale=1.0"
-</风格>
-</中心>
+    </script>
+</body>
+</html>
